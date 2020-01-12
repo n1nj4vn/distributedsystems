@@ -51,18 +51,20 @@ class FingerTable {
 }
 
 
-public class ChordPeer implements Peer{
+public class ChordPeer implements Peer {
     enum STATUS {
         ONLINE, OFFLINE;
     }
 
+    private boolean isAnchor;
     private int nodeID;
+    private String ipAddress=Config.DEFAULT_PEER_IP;
+    private String port;
+
     private int predecessorId;  // Only needed if you want to record predecessor as well.
     private int successorId;
 
     private int requestID = -1;
-    private String ipAddress=Config.DEFAULT_PEER_IP;
-    private String port;
 
     public ChordPeer(int nodeID) {
         this.nodeID = nodeID;
