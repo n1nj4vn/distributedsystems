@@ -1,5 +1,5 @@
 CSCI-652 Distributed Systems
-For more info, please visit my teaching page.
+For more info, please visit my [teaching](https://www.cs.rit.edu/~ph/teaching) page.
 
 For RIT students, you can find more information on myCourses.
 
