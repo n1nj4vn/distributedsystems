@@ -4,3 +4,6 @@ For more info, please visit my [teaching](https://www.cs.rit.edu/~ph/teaching) p
 For RIT students, you can find more information on myCourses.
 
 Run ```mvn package``` inside the folder of each module to compile and generate a .jar file.
+
+
+If you need to sync your forked repo with upstream repo, check [here](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork)
