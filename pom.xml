@@ -18,7 +18,7 @@
         <module>pubsub</module>
         <module>socket_programming</module>
         <module>remote_procedure_call</module>
-        <module>DistributedConsensus</module>
+        <module>distributed_consensus</module>
 
     </modules>
 
