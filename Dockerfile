@@ -3,6 +3,7 @@
 
 FROM ubuntu:18.04
 MAINTAINER Peizhao Hu, http://cs.rit.edu/~ph
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y  software-properties-common && \
@@ -11,9 +12,10 @@ RUN apt-get update && \
     apt-get install -y net-tools iputils-ping maven gradle nmap wget git vim build-essential && \
     apt-get clean
 
-
 RUN mkdir /csci652
 
+
+# copy files from the directory of the Dockerfile on your computer to this docker build environment.
 COPY basic_word_count /csci652/basic_word_count
 COPY distributed_hash_table /csci652/distributed_hash_table
 COPY distributed_consensus /csci652/distributed_consensus
@@ -23,6 +25,10 @@ COPY socket_programming /csci652/socket_programming
 COPY pom.xml /csci652/
 COPY README.md /csci652/
 COPY LICENSE /csci652/
+
+# You will need add COPY commands to copy your project source code into the docker build environment.
+# e.g., COPY project1 /csci652/project1
+
 
 WORKDIR /csci652
 

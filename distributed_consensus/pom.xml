@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>DistributedConsensus</artifactId>
+    <artifactId>distributed_consensus</artifactId>
 
 
 </project>
