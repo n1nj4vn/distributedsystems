@@ -30,6 +30,7 @@ COPY LICENSE /csci652/
 
 # You will need add COPY commands to copy your project source code into the docker build environment.
 # e.g., COPY project1 /csci652/project1
+COPY project1 /csci652/project1
 
 # setup working directory in the container
 WORKDIR /csci652
