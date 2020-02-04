@@ -12,12 +12,15 @@ services:
     container_name: peer1
     working_dir: /csci652
     networks:
-      - csci652network
+      csci652network:
+        ipv4_address: 172.16.238.2
     command:
       - /bin/bash
       - -c
       - |
-        echo "Initialize peer1...done!"
+        echo "Initialize server...done!"
+        cd /csci652/project1
+        java -cp target/project1-1.0-SNAPSHOT.jar edu.rit.cs.Server
         tail -f /dev/null
 
 
@@ -28,15 +31,22 @@ services:
       - peer1
     working_dir: /csci652
     networks:
-      - csci652network
+      csci652network:
+        ipv4_address: 172.16.238.3
     command:
       - /bin/bash
       - -c
       - |
-        echo "Initialize peer2...done!"
+        echo "Initialize client...done!"
+        cd /csci652/project1
+        java -cp target/project1-1.0-SNAPSHOT.jar edu.rit.cs.Client
         tail -f /dev/null
 
 
 
 networks:
   csci652network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
