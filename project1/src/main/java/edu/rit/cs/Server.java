@@ -3,20 +3,56 @@ package edu.rit.cs;
 import java.io.*;
 import java.net.*;
 
+/**
+ * This Server will receive a file from a Client to perform a word count on and generate a text
+ * file containing all results. It will then send the text file back to the Client who will then
+ * print the result.
+ */
 public class Server {
 
   public static void main(String args[]) {
+//    String client_address = "172.16.238.3";
+    String client_address = "localhost";
+    int serverPort = 7896;
+    int bytesRead;
+    int current = 0;
+    FileOutputStream fos;
+    BufferedOutputStream bos;
+    Socket s;
+
     try {
-      int serverPort = 7896;
-      ServerSocket listenSocket = new ServerSocket(serverPort);
-      System.out.println("TCP Server is running and accepting client connections...");
-      while (true) {
-        Socket clientSocket = listenSocket.accept();
-        Connection c = new Connection(clientSocket);
-      }
+      s = new Socket(client_address, serverPort);
+      byte[] fileByteArray = new byte[300000000];
+      InputStream is = s.getInputStream();
+      fos = new FileOutputStream("project1/words_recv.txt");
+      bos = new BufferedOutputStream(fos);
+      bytesRead = is.read(fileByteArray, 0, fileByteArray.length);
+      current = bytesRead;
+
+      do {
+        bytesRead =
+            is.read(fileByteArray, current, (fileByteArray.length - current));
+        if (bytesRead >= 0) {
+          current += bytesRead;
+        }
+      } while (bytesRead > -1);
+
+      bos.write(fileByteArray, 0, current);
+      bos.flush();
     } catch (IOException e) {
-      System.out.println("Listen :" + e.getMessage());
+      e.printStackTrace();
     }
+
+//    try {
+//      ServerSocket listenSocket = new ServerSocket(serverPort);
+//      System.out.println("TCP Server is running and accepting client connections...");
+//      while (true) {
+//        Socket clientSocket = listenSocket.accept();
+//        Connection c = new Connection(clientSocket);
+//      }
+//    } catch (IOException e) {
+//      System.out.println("Listen :" + e.getMessage());
+//    }
   }
 }
 

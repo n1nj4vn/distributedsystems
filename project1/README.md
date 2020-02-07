@@ -14,3 +14,16 @@ Server in another Docker container:
 ```
 mvn package
 ```
+
+# **Docker-compose**
+Build and start docker containers
+```
+docker-compose up
+```
+use `--build` to rebuild docker image
+
+Attach to the running docker containers
+```
+docker exec -it <CONTAINER-NAME> bash
+```
+where `<CONTAINER-NAME>` should be replaced with your targeted container name.

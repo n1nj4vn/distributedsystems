@@ -39,7 +39,7 @@ services:
       - |
         echo "Initialize client...done!"
         cd /csci652/project1
-        java -cp target/project1-1.0-SNAPSHOT.jar edu.rit.cs.Client
+        java -cp target/project1-1.0-SNAPSHOT.jar edu.rit.cs.Client project1/affr.csv
         tail -f /dev/null
 
 
