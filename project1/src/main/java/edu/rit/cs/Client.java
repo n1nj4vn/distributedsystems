@@ -2,104 +2,107 @@ package edu.rit.cs;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * This Client will read the affr.csv and send it to the Server program. The Server program will
- * perform a word count on the file and generate a text file containing all results. It will then
- * send the text file back to the Client who will then print the result.
+ * This Client will send the affr.csv to the Server program. The Server program will perform a word
+ * count on the file and generate a text file containing all results. It will then send the text
+ * file back to the Client who will then print the result.
  */
 public class Client {
 
   public static void main(String args[]) {
-    // arguments supply message and hostname of destination
-    // String csv_location = args[0];
-    String csv_location = "project1/affr.csv";
-    String text_file_location = "project1/words_send.txt";
+    // arguments supply location of affr.csv file
+    String csv_location = args[0];
+    String word_count = "word_count_client.txt";
     String server_address = "172.16.238.2";
-    int serverPort = 7896;
 
+    Socket s = null;
     try {
-      BufferedReader reader = new BufferedReader(new FileReader(new File(csv_location)));
-      BufferedWriter writer = new BufferedWriter(new FileWriter(new File(text_file_location)));
-
-      String nextLine = "";
-      String[] lineArray;
-      while ((nextLine = reader.readLine()) != null) {
-        lineArray = nextLine.split("[^a-zA-Z0-9']+");
-        for (String word : lineArray) {
-          writer.write(word);
-          writer.newLine();
-        }
-      }
-
-      reader.close();
-      writer.close();
+      int serverPortRecv = 7896;
+      s = new Socket(server_address, serverPortRecv);
+      // Send the CSV file
+      FileInputStream fis;
+      BufferedInputStream bis;
+      OutputStream os;
+      File fileToSend = new File(csv_location);
+      byte[] fileByteArray = new byte[(int) fileToSend.length()];
+      fis = new FileInputStream(fileToSend);
+      bis = new BufferedInputStream(fis);
+      bis.read(fileByteArray, 0, fileByteArray.length);
+      os = s.getOutputStream();
+      os.write(fileByteArray, 0, fileByteArray.length);
+      os.flush();
+      System.out.println("CSV Sent!");
+    } catch (UnknownHostException e) {
+      System.out.println("Sock: " + e.getMessage());
+    } catch (EOFException e) {
+      System.out.println("EOF: " + e.getMessage());
     } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    Socket s;
-    ServerSocket ss;
-    FileInputStream fis;
-    BufferedInputStream bis;
-    OutputStream os;
-    try {
-      ss = new ServerSocket(serverPort);
-      System.out.println("Waiting");
-      while (true) {
+      System.out.println("IO: " + e.getMessage());
+    } finally {
+      if (s != null) {
         try {
-          s = ss.accept();
-          System.out.println("Accepted connection: " + s);
-          // send file
-          File fileToSend = new File(text_file_location);
-          byte[] fileByteArray = new byte[(int) fileToSend.length()];
-          fis = new FileInputStream(fileToSend);
-          bis = new BufferedInputStream(fis);
-          bis.read(fileByteArray, 0, fileByteArray.length);
-          os = s.getOutputStream();
-          os.write(fileByteArray, 0, fileByteArray.length);
-          os.flush();
           s.close();
-          return;
-        } catch (IOException ex) {
-          ex.printStackTrace();
+        } catch (IOException e) {
+          System.out.println("close:" + e.getMessage());
         }
-//        } finally {
-//          if (bis != null) bis.close();
-//          if (os != null) os.close();
-//          if (s!=null) s.close();
-//        }
       }
-    } catch (IOException ex) {
-      ex.printStackTrace();
     }
 
-//    try {
-//    s = new Socket(server_address, serverPort);
-//      DataInputStream in = new DataInputStream(s.getInputStream());
-//      DataOutputStream out =
-//          new DataOutputStream(s.getOutputStream());
-//      out.writeUTF(message);
-//      System.out.println("Sent: " + message);
-//      String data = in.readUTF();
-//      System.out.println("Received: " + data);
-//    } catch (UnknownHostException e) {
-//      System.out.println("Sock:" + e.getMessage());
-//    } catch (EOFException e) {
-//      System.out.println("EOF:" + e.getMessage());
-//    } catch (IOException e) {
-//      System.out.println("IO:" + e.getMessage());
-//    } finally {
-//      if (s != null) {
-//        try {
-//          s.close();
-//        } catch (IOException e) {
-//          System.out.println("close:" + e.getMessage());
-//        }
-//      }
-//    }
+    try {
+      Thread.sleep(1000 * 25);
+      int serverPortRecv = 7897;
+      s = new Socket(server_address, serverPortRecv);
+      // Receive the results file
+      FileOutputStream fos;
+      BufferedOutputStream bos;
+      int bytesRead;
+      int current = 0;
+      byte[] fileByteArray = new byte[450000];
+      InputStream is = s.getInputStream();
+      fos = new FileOutputStream(word_count);
+      bos = new BufferedOutputStream(fos);
+      bytesRead = is.read(fileByteArray, 0, fileByteArray.length);
+      current = bytesRead;
 
+      do {
+        bytesRead =
+            is.read(fileByteArray, current, (fileByteArray.length - current));
+        if (bytesRead >= 0) {
+          current += bytesRead;
+        }
+      } while (bytesRead > -1);
+
+      bos.write(fileByteArray, 0, current);
+      bos.flush();
+
+      System.out.println("Results received from Server");
+
+      BufferedReader br = new BufferedReader(new FileReader(new File(word_count)));
+      String currResult = br.readLine();
+      while (currResult != null) {
+        System.out.println(currResult);
+        currResult = br.readLine();
+      }
+      br.close();
+      System.out.println("End of Results!");
+    } catch (UnknownHostException e) {
+      System.out.println("Sock: " + e.getMessage());
+    } catch (EOFException e) {
+      System.out.println("EOF: " + e.getMessage());
+    } catch (IOException e) {
+      System.out.println("IO: " + e.getMessage());
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } finally {
+      if (s != null) {
+        try {
+          s.close();
+        } catch (IOException e) {
+          System.out.println("close:" + e.getMessage());
+        }
+      }
+    }
   }
 }
+

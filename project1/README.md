@@ -10,11 +10,6 @@ Server in another Docker container:
 - Perform word count and produce a result
 - Send the result back to the client
 
-# **Compile your code**
-```
-mvn package
-```
-
 # **Docker-compose**
 Build and start docker containers
 ```
