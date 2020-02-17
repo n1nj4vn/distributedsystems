@@ -6,7 +6,7 @@ import java.io.*;
 public class TCPServer {
     public static void main(String args[]) {
         try {
-            int serverPort = 7896;
+            int serverPort = 9092;
             ServerSocket listenSocket = new ServerSocket(serverPort);
             System.out.println("TCP Server is running and accepting client connections...");
             while (true) {
