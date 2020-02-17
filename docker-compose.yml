@@ -13,6 +13,8 @@ services:
     working_dir: /csci652
     networks:
       - csci652network
+    ports:
+      - 9091
     command:
       - /bin/bash
       - -c
@@ -29,6 +31,8 @@ services:
     working_dir: /csci652
     networks:
       - csci652network
+    ports:
+      - 9091
     command:
       - /bin/bash
       - -c

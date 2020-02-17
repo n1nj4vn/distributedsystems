@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class JsonRPCClient {
 
-
 	public static void main(String[] args) {
 
 
@@ -26,7 +25,7 @@ public class JsonRPCClient {
 		URL serverURL = null;
 
 		try {
-			serverURL = new URL("http://127.0.0.1:8080");
+			serverURL = new URL("http://"+args[0]);
 
 		} catch (MalformedURLException e) {
 		// handle exception...
@@ -66,6 +65,6 @@ public class JsonRPCClient {
 			System.out.println(response.getResult());
 		else
 			System.out.println(response.getError().getMessage());
-	
+
 	}
 }
