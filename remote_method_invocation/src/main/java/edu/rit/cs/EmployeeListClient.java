@@ -12,8 +12,11 @@ public class EmployeeListClient {
         try{
             aEmployeeList  = (EmployeeList) Naming.lookup("rmi://rmiregistry:4023/EmployeeList");
 
-            Person p = new Person("bob", 23);
-            aEmployeeList.newPerson(p, EmployeeList.Role.Engineer);
+            aEmployeeList.newPerson(new Person("alice", 23), EmployeeList.Role.Engineer);
+
+            aEmployeeList.newPerson(new Person("bob", 25), EmployeeList.Role.Researcher);
+
+            aEmployeeList.newPerson(new Person("charlie", 27), EmployeeList.Role.Sale);
 
             System.out.println("Total number of employee: " + aEmployeeList.getEmployeeCount());
         } catch(RemoteException e) {
