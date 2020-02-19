@@ -1,0 +1,3 @@
+grant codeBase "file:/csci652/remote_method_invocation" {
+    permission java.security.AllPermission;
+};

@@ -23,6 +23,7 @@ COPY distributed_hash_table /csci652/distributed_hash_table
 COPY distributed_consensus /csci652/distributed_consensus
 COPY pubsub /csci652/pubsub
 COPY remote_procedure_call /csci652/remote_procedure_call
+COPY remote_method_invocation /csci652/remote_method_invocation
 COPY socket_programming /csci652/socket_programming
 COPY pom.xml /csci652/
 COPY README.md /csci652/

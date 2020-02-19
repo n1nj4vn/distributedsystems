@@ -45,6 +45,23 @@ services:
         tail -f /dev/null
 
 
+  rmiregistry:
+    image: csci652:latest
+    container_name: rmiregistry
+    depends_on:
+      - peer1
+    working_dir: /csci652
+    networks:
+      - csci652network
+    ports:
+      - 1099
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize rmiregistry...done!"
+        tail -f /dev/null
+
 
 networks:
   csci652network:
