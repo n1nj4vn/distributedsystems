@@ -12,7 +12,7 @@ public class TCPClient {
 
         Socket s = null;
         try {
-            int serverPort = 7896;
+            int serverPort = 9092;
             s = new Socket(server_address, serverPort);
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out =

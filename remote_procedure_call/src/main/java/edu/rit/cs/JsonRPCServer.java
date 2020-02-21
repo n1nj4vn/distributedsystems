@@ -1,6 +1,6 @@
 package edu.rit.cs;
 
-//The JSON-RPC 2.0 Base classes that define the 
+//The JSON-RPC 2.0 Base classes that define the
 //JSON-RPC 2.0 protocol messages
 import com.thetransactioncompany.jsonrpc2.*;
 import com.thetransactioncompany.jsonrpc2.client.JSONRPC2Session;
@@ -26,7 +26,7 @@ public class JsonRPCServer {
 	/**
 	 * The port that the server listens on.
 	 */
-	private static final int PORT = 8080;
+	private static final int PORT = 9091;
 
 
 
@@ -98,12 +98,12 @@ public class JsonRPCServer {
 						body.append((char) c);
 					}
 				}
-				
+
 				System.out.println(body.toString());
 				JSONRPC2Request request = JSONRPC2Request.parse(body.toString());
 				JSONRPC2Response resp = dispatcher.process(request, null);
-				
-				
+
+
 				// send response
 				out.write("HTTP/1.1 200 OK\r\n");
 				out.write("Content-Type: application/json\r\n");
@@ -127,8 +127,8 @@ public class JsonRPCServer {
 	}
 
 
-	
-	
+
+
 	public static void main(String[] args) throws Exception {
 
 		System.out.println("The server is running.");
@@ -141,6 +141,6 @@ public class JsonRPCServer {
 			listener.close();
 		}
 	}
-	
-	
+
+
 }
