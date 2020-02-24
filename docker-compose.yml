@@ -44,13 +44,12 @@ services:
         echo "Initialize peer2...done!"
         tail -f /dev/null
 
-
-  rmiregistry:
+  rmiserver:
     image: csci652:latest
-    container_name: rmiregistry
+    container_name: rmiserver
     depends_on:
       - peer1
-    working_dir: /csci652
+    working_dir: /csci652/remote_method_invocation
     networks:
       - csci652network
     ports:
@@ -59,8 +58,24 @@ services:
       - /bin/bash
       - -c
       - |
-        echo "Initialize rmiregistry...done!"
+        echo "Initialize rmiserver...done!"
         tail -f /dev/null
+
+  rmiclient:
+    image: csci652:latest
+    container_name: rmiclient
+    depends_on:
+      - rmiserver
+    working_dir: /csci652/remote_method_invocation
+    networks:
+    - csci652network
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize rmiclient...done!"
+        tail -f /dev/null
+
 
 
 networks:

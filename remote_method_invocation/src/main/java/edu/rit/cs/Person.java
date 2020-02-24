@@ -1,6 +1,8 @@
 package edu.rit.cs;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
     private String name;
     private String address;
     private int age;
