@@ -8,9 +8,9 @@ import java.util.List;
 class EmployeeServant implements Employee {
     Person _p;
     int _id;
-    EmployeeList.Role _role;
+    Employee.Role _role;
 
-    public EmployeeServant(Person p, int id, EmployeeList.Role r) {
+    public EmployeeServant(Person p, int id, Employee.Role r) {
         this._p=p;
         this._id=id;
         this._role=r;
@@ -22,7 +22,7 @@ class EmployeeServant implements Employee {
     }
 
     @Override
-    public EmployeeList.Role getEmployeeRole() throws RemoteException {
+    public Employee.Role getEmployeeRole() throws RemoteException {
         return this._role;
     }
 
@@ -40,7 +40,7 @@ public class EmployeeListServant extends UnicastRemoteObject implements Employee
     }
 
     @Override
-    public Employee newPerson(Person p, Role r) throws RemoteException {
+    public Employee newPerson(Person p, Employee.Role r) throws RemoteException {
         Employee employee = new EmployeeServant(p, employeeList.size()+1, r);
         employeeList.add(employee);
         return employee;
