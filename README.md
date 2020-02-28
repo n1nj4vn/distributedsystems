@@ -1,4 +1,5 @@
-CSCI-652 Distributed Systems
+CSCI-652 Distributed Systems:
+
 For more info, please visit my [teaching](https://www.cs.rit.edu/~ph/teaching) page.
 
 For RIT students, you can find more information on myCourses.
@@ -35,6 +36,12 @@ git push
 
 Note, you might need to resolve conflicts if there are mismatches in the two repo.
 
+#Projects!
+
+- Project 1: Client/Server System
+- Project 2: Publisher/Subscriber System
+- Project 3:
+- Project 4:
 
 # Docker container
 Build image with
@@ -54,11 +61,19 @@ docker run -it csci652 /bin/bash
 
 
 # Docker-compose
-Build and start docker containers
+The docker-compose files have been created so that you may automate the creation/demo of these systems.
+
+_PROJECT#_ is the name of the folder where the project you would like to run resides (i.e. project1, project2, ...).
+
+Build docker containers:
 ```
-docker-compose up
+docker-compose -f docker-compose-PROJECT#.yml build
 ```
-use `--build` to rebuild docker image
+
+Start docker containers:
+```
+docker-compose -f docker-compose-PROJECT#.yml up
+```
 
 Attach to the running docker containers
 ```

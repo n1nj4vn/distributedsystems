@@ -7,12 +7,13 @@ services:
   peer1:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-project2
     image: csci652:latest
     container_name: peer1
     working_dir: /csci652
     networks:
-      - csci652network
+      csci652network:
+        ipv4_address: 172.16.238.2
     ports:
       - 9091
       - 9092
@@ -32,7 +33,8 @@ services:
       - peer1
     working_dir: /csci652
     networks:
-      - csci652network
+      csci652network:
+        ipv4_address: 172.16.238.3
     ports:
       - 9091
       - 9092
@@ -68,7 +70,7 @@ services:
       - rmiserver
     working_dir: /csci652/remote_method_invocation
     networks:
-      - csci652network
+    - csci652network
     command:
       - /bin/bash
       - -c
@@ -80,3 +82,7 @@ services:
 
 networks:
   csci652network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"

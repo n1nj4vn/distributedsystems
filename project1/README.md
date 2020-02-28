@@ -11,11 +11,15 @@ Server in another Docker container:
 - Send the result back to the client
 
 # **Docker-compose**
-Build and start docker containers
+Build docker containers:
 ```
-docker-compose up
+docker-compose -f docker-compose-project1.yml build
 ```
-use `--build` to rebuild docker image
+
+Start docker containers:
+```
+docker-compose -f docker-compose-project1.yml up
+```
 
 Attach to the running docker containers
 ```

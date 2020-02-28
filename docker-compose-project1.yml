@@ -1,0 +1,51 @@
+# Test this without rebuilding the docker image $> docker-compose up
+# Test this with rebuilding the docker image $> docker-compose up --build
+
+version: '3.7'
+
+services:
+  peer1:
+    build:
+      context: .
+      dockerfile: Dockerfile-project1
+    image: csci652:latest
+    container_name: peer1
+    working_dir: /csci652
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.2
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize server...done!"
+        cd /csci652/project1
+        java -cp target/project1-1.0-SNAPSHOT.jar edu.rit.cs.Server
+        tail -f /dev/null
+
+
+  peer2:
+    image: csci652:latest
+    container_name: peer2
+    depends_on:
+      - peer1
+    working_dir: /csci652
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.3
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize client...done!"
+        cd /csci652/project1
+        sleep 5
+        java -cp target/project1-1.0-SNAPSHOT.jar edu.rit.cs.Client affr.csv
+        tail -f /dev/null
+
+networks:
+  csci652network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
