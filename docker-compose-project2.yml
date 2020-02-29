@@ -10,19 +10,15 @@ services:
       dockerfile: Dockerfile-project2
     image: csci652:latest
     container_name: peer1
-    working_dir: /csci652
+    working_dir: /csci652/project2
     networks:
       csci652network:
         ipv4_address: 172.16.238.2
-    ports:
-      - 9091
-      - 9092
-      - 9093
     command:
       - /bin/bash
       - -c
       - |
-        echo "Initialize peer1...done!"
+        echo "Initialize server...done!"
         tail -f /dev/null
 
 
@@ -31,54 +27,32 @@ services:
     container_name: peer2
     depends_on:
       - peer1
-    working_dir: /csci652
+    working_dir: /csci652/project2
     networks:
       csci652network:
         ipv4_address: 172.16.238.3
-    ports:
-      - 9091
-      - 9092
-      - 9093
     command:
       - /bin/bash
       - -c
       - |
-        echo "Initialize peer2...done!"
+        echo "Initialize PubSubAgent...done!"
         tail -f /dev/null
 
-  rmiserver:
+  peer3:
     image: csci652:latest
-    container_name: rmiserver
+    container_name: peer3
     depends_on:
       - peer1
-    working_dir: /csci652/remote_method_invocation
+    working_dir: /csci652/project2
     networks:
-      - csci652network
-    ports:
-      - 1099
+      csci652network:
+        ipv4_address: 172.16.238.4
     command:
       - /bin/bash
       - -c
       - |
-        echo "Initialize rmiserver...done!"
+        echo "Initialize PubSubAgent...done!"
         tail -f /dev/null
-
-  rmiclient:
-    image: csci652:latest
-    container_name: rmiclient
-    depends_on:
-      - rmiserver
-    working_dir: /csci652/remote_method_invocation
-    networks:
-    - csci652network
-    command:
-      - /bin/bash
-      - -c
-      - |
-        echo "Initialize rmiclient...done!"
-        tail -f /dev/null
-
-
 
 networks:
   csci652network:

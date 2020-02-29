@@ -36,7 +36,7 @@ git push
 
 Note, you might need to resolve conflicts if there are mismatches in the two repo.
 
-#Projects!
+# Projects!
 
 - Project 1: Client/Server System
 - Project 2: Publisher/Subscriber System
