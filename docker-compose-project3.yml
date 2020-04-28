@@ -1,0 +1,141 @@
+# Test this without rebuilding the docker image $> docker-compose up
+# Test this with rebuilding the docker image $> docker-compose up --build
+
+version: '3.7'
+
+services:
+  miniServer:
+    build:
+      context: .
+      dockerfile: Dockerfile-project3
+    image: csci652:latest
+    container_name: miniServer
+    working_dir: /csci652/project3
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.2
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize miniServer...done!"
+        tail -f /dev/null
+
+  peer2:
+    image: csci652:latest
+    container_name: peer2
+    depends_on:
+      - miniServer
+    working_dir: /csci652/project3
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.4
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize peer2...done!"
+        tail -f /dev/null
+
+  peer4:
+    image: csci652:latest
+    container_name: peer4
+    depends_on:
+      - miniServer
+    working_dir: /csci652/project3
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.6
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize peer4...done!"
+        tail -f /dev/null
+
+  peer6:
+    image: csci652:latest
+    container_name: peer6
+    depends_on:
+      - miniServer
+    working_dir: /csci652/project3
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.8
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize peer6...done!"
+        tail -f /dev/null
+
+  peer8:
+    image: csci652:latest
+    container_name: peer8
+    depends_on:
+      - miniServer
+    working_dir: /csci652/project3
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.10
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize peer8...done!"
+        tail -f /dev/null
+
+  peer11:
+    image: csci652:latest
+    container_name: peer11
+    depends_on:
+      - miniServer
+    working_dir: /csci652/project3
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.13
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize peer11...done!"
+        tail -f /dev/null
+
+  peer3:
+    image: csci652:latest
+    container_name: peer3
+    depends_on:
+      - miniServer
+    working_dir: /csci652/project3
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.5
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize peer3...done!"
+        tail -f /dev/null
+
+  peer10:
+    image: csci652:latest
+    container_name: peer10
+    depends_on:
+      - miniServer
+    working_dir: /csci652/project3
+    networks:
+      csci652network:
+        ipv4_address: 172.16.238.12
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Initialize peer10...done!"
+        tail -f /dev/null
+
+networks:
+  csci652network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
